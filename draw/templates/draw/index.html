@@ -103,28 +103,22 @@
    <hr>
      
   <div class="container" id="log" style="padding-top:30px;">
-      <div class= "row log-box" style = "margin-top:-15px;">
-      <div class ="col-12">
-        [so and so spent] $[x] on [category]
-      </div>
-  </div>
-    
-  </div>
  
-            <form>
-              Category:<br>
-                <select name="Category" id="category" size="4">
-                <option value="Food">Food</option>
-                <option value="Activities">Activities</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Misc">Misc.</option>
-              </select>
-              <br>
-              Amount:<br>
-              <input type="text" name="amount" id="amount">
-              <br><br>
-              <input id ="submit" type="submit" value="Submit">
-            </form>
+  </div>
+      
+  <div id = "submitForm">
+          <form> 
+            Category:<br>
+            <select name="Category" id="category" size="4">
+              <option value="Food">Food</option>
+              <option value="Activities">Activities</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Misc">Misc.</option></select>
+            <br>Amount:<br>
+            <input type="text" name="amount" id="amount"> <br><br> 
+            <div id ="submit" value="Submit"> Submit </div>
+          </form>
+   </div>
   
 </body>
   
@@ -132,15 +126,18 @@
 <script>  
   
    $(document).ready(()=>{
+     
      var url = window.location.href;
      
-     // creates a  random user 
-     var user = Math.random();
+    
      var catgories = ["Food", "Activities", "Transportation", "Misc."];
      // list of users
-     var users = []; 
-     var url_large = "https://p3-himanshuc71-hchotwani921366.codeanyapp.com/draw/?size=large";
-     var socket = new WebSocket('wss://p3-himanshuc71-hchotwani921366.codeanyapp.com/ws/draw');
+      // creates a  random user 
+     var users = ["Alice","Bob", "Eve", "Jack", "Jill", "Carl", "Josh"];
+     var user = users[Math.trunc(Math.random()*users.length)];
+                                 
+     var url_large = "http://sharedfinances-hchotwani921366.codeanyapp.com/draw/?size=large";
+     var socket = new WebSocket('wss://sharedFinances-hchotwani921366.codeanyapp.com/ws/draw');
      
      document.getElementById("submit").onclick = function() {sendInfo()};
 
@@ -157,31 +154,33 @@
       console.log(amt);
       
       //send Info
-      var pointInfo = {"user": user, "amount": amt, "category":value};
-      var pointInfoJSON = JSON.stringify(pointInfo);
-      socket.send(pointInfoJSON);
+      var info = {"user": user, "amount": amt, "category":value};
+      var infoJSON = JSON.stringify(info);
+      socket.send(infoJSON);
       
       //confirmation of action                 
       alert("you have submitted your purchase!");                 
     };
      
-//      socket.onmessage = function(receivedMessage) {
-//       var info = JSON.parse(receivedMessage.data); // will need user, category, amount
-      
-//       if (url===url_large) {
-//           console.log("info" + info);   
-//           if (info.user in users) {
-//              //(".log").append(function(){return "<div class='row log-box'><div class='col-12'>"+info.user + "$ spent $" + point.amount +"on "+ point.category + "</div></div>";});
-//              console.log("later");
-//           }  else {
-            
-//             alert("An unknown user," + info.user +", is trying to contribute to your budget. would you like to add them?");
-          
-//           }
-//     }
-   });
+     
+     socket.onmessage = function(message) {
+       var info = JSON.parse(message.data);
+       if (url===url_large) {
+         $("#log").append("<div class='row log-box'><div class='col-12'>" + info.user + " spent $" + info.amount + " on "+ info.category + "</div></div>");
+         console.log(info.amount);
+         console.log(info.category);
+       } else {
+         console.log("did not do anything with the message!!");
+       }
+     }
+     
+     if (url === url_large) {
+         // document.getElementById("submitForm").style.display = "none";
+         $("#submitForm").hide(0.000001);
+     }
   
-    
+  
+   })
   
 </script>
 </html>
