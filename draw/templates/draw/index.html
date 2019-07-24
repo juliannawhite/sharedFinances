@@ -1,0 +1,187 @@
+{% load static %}
+<!-- https://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript
+<!DOCTYPE html> -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Shared Finances</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style type="text/css">
+      
+      body {
+        background-color: #d5fdd5;
+      }
+      
+      .bank {
+        height:260px;
+        background: transparent;
+        text-align: center:
+      }
+      
+      .title {
+        font-size: 80px;
+        text-align: center;
+        margin-top:10px;
+        font-family: "Montserrat";
+      }
+      
+      .category {
+        font-size:30px;
+        text-align: left;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left:20px;
+        font-family: "Roboto";
+      }
+      
+      .flex-container{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 60vh;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      
+      .box {
+        width: 50%;
+        height: 25%;
+      }
+      
+      .log-box {
+        font-family: "Roboto";
+        font-size: 20px;
+      }
+        
+    </style>
+
+</head>
+<body>
+    
+<!--   <img class="bank" src = "http://www.sclance.com/pngs/piggy-bank-png/piggy_bank_png_1023807.jpg"> -->
+  
+  <div class = "container">
+    
+    <div class= "row">
+      <div class ="col-12 title">
+        Shared Finances
+      </div>
+    </div>
+    <hr>
+    
+    <div class="flex-container">
+
+        <div class="category box">
+         <i class="fa fa-cutlery" aria-hidden="true" id="food"></i>
+          Food:
+        </div>
+        <div class="category box">
+          <i class="fa fa-bicycle" aria-hidden="true"></i>
+          Activities:
+        </div>
+        <div class="category box">
+          <i class="fa fa-subway" aria-hidden="true"></i>
+          Transportation:
+        </div>
+        <div class="category box">
+          <form id = "misc">
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          Misc:           
+        </div>
+
+        <div id="total-budget" class ="box">
+        </div>
+      
+  </div>
+    
+   <hr>
+     
+  <div class="container" id="log" style="padding-top:30px;">
+      <div class= "row log-box" style = "margin-top:-15px;">
+      <div class ="col-12">
+        [so and so spent] $[x] on [category]
+      </div>
+  </div>
+    
+  </div>
+ 
+            <form>
+              Category:<br>
+                <select name="Category" id="category" size="4">
+                <option value="Food">Food</option>
+                <option value="Activities">Activities</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Misc">Misc.</option>
+              </select>
+              <br>
+              Amount:<br>
+              <input type="text" name="amount" id="amount">
+              <br><br>
+              <input id ="submit" type="submit" value="Submit">
+            </form>
+  
+</body>
+  
+  
+<script>  
+  
+   $(document).ready(()=>{
+     var url = window.location.href;
+     
+     // creates a  random user 
+     var user = Math.random();
+     var catgories = ["Food", "Activities", "Transportation", "Misc."];
+     // list of users
+     var users = []; 
+     var url_large = "https://p3-himanshuc71-hchotwani921366.codeanyapp.com/draw/?size=large";
+     var socket = new WebSocket('wss://p3-himanshuc71-hchotwani921366.codeanyapp.com/ws/draw');
+     
+     document.getElementById("submit").onclick = function() {sendInfo()};
+
+    function sendInfo() {
+      //amount
+      var amt = document.getElementById("amount").value;
+      
+      //category
+      var e = document.getElementById("category");
+      var value = e.options[e.selectedIndex].value;
+      var text = e.options[e.selectedIndex].text;
+      
+      console.log(value);
+      console.log(amt);
+      
+      //send Info
+      var pointInfo = {"user": user, "amount": amt, "category":value};
+      var pointInfoJSON = JSON.stringify(pointInfo);
+      socket.send(pointInfoJSON);
+      
+      //confirmation of action                 
+      alert("you have submitted your purchase!");                 
+    };
+     
+//      socket.onmessage = function(receivedMessage) {
+//       var info = JSON.parse(receivedMessage.data); // will need user, category, amount
+      
+//       if (url===url_large) {
+//           console.log("info" + info);   
+//           if (info.user in users) {
+//              //(".log").append(function(){return "<div class='row log-box'><div class='col-12'>"+info.user + "$ spent $" + point.amount +"on "+ point.category + "</div></div>";});
+//              console.log("later");
+//           }  else {
+            
+//             alert("An unknown user," + info.user +", is trying to contribute to your budget. would you like to add them?");
+          
+//           }
+//     }
+   });
+  
+    
+  
+</script>
+</html>
