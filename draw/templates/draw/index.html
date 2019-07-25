@@ -27,8 +27,9 @@
       .title {
         font-size: 80px;
         text-align: center;
-        margin-top:10px;
         font-family: "Montserrat";
+        margin-top:-20px;
+        
       }
       
       .category {
@@ -50,13 +51,18 @@
       }
       
       .box {
-        width: 50%;
+        width: 70%;
         height: 25%;
       }
       
       .log-box {
         font-family: "Roboto";
         font-size: 20px;
+      }
+      
+      .btn {
+        background-color: white; 
+        margin-top: 20px;
       }
         
     </style>
@@ -68,38 +74,60 @@
   
   <div class = "container">
     
-    <div class= "row">
-      <div class ="col-12 title">
+    <div class="row" style="margin-top:30px;" >
+      <div class="col-2">
+        <button class="btn plan" id = "sharedBtn"><i class="fa fa-plus" ></i> Plan Budget</button>
+      </div>
+      
+      <div class ="col-8 title">
         Shared Finances
       </div>
+      
+      <div class="col-2" id="userBtn" style="margin-top:-30px;">
+        <button class = "btn" style="text-align:right;"><i class="fa fa-user" ></i> Add User</button>
+        <button class = "btn" style="text-align:right;"><i class="fa fa-info" ></i> Instructions</button>
+      </div>
+      
     </div>
+    
+<!--    <div class="row" style="margin-top:30px;">
+      <div class="col-12" style="text-align:right;">
+        <button class="btn"><i class="fa fa-check" ></i> Finalize Budget</button>
+      </div>
+    </div> -->
+
     <hr>
     
     <div class="flex-container">
 
-        <div class="category box">
-         <i class="fa fa-cutlery" aria-hidden="true" id="food"></i>
-          Food:
+        <div class="category box food-div">
+         <i class="fa fa-cutlery" aria-hidden="true"></i>
+          Food: $
+<!--           <input type="text" name="food-amount" id="food-amount">   -->
         </div>
-        <div class="category box">
+        <div class="category box act-div">
           <i class="fa fa-bicycle" aria-hidden="true"></i>
-          Activities:
+          Activities: $
+<!--           <input type="text" name="act-amount" id="act-amount">   -->
         </div>
-        <div class="category box">
+        <div class="category box tra-div">
           <i class="fa fa-subway" aria-hidden="true"></i>
-          Transportation:
+          Transportation: $
+<!--           <input type="text" name="tra-amount" id="tra-amount">  -->
         </div>
-        <div class="category box">
-          <form id = "misc">
+        <div class="category box misc-div">
             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-          Misc:           
+            Misc: $          
+<!--             <input type="text" name="misc-amount" id="misc-amount">  -->
         </div>
+      
 
         <div id="total-budget" class ="box">
         </div>
       
   </div>
-    
+    <div class="container" id ="transbtn" style = "margin-top:-55px;">
+    </div>
    <hr>
      
   <div class="container" id="log" style="padding-top:30px;">
@@ -174,9 +202,42 @@
        }
      }
      
+     // code for large screen
      if (url === url_large) {
-         // document.getElementById("submitForm").style.display = "none";
          $("#submitForm").hide(0.000001);
+         $(".plan").on('click', () => {
+           // clear texts
+           $('.food-div').empty();
+           $('.act-div').empty();
+           $('.tra-div').empty();
+           $('.misc-div').empty();
+           // add new texts with input option
+           $('.food-div').append('<i class="fa fa-cutlery" aria-hidden="true"></i> Food: $ <input type="text" name="food-amount" id="food-amount">');
+           $('.act-div').append('<i class="fa fa-bicycle" aria-hidden="true"></i> Activities: $ <input type="text" name="act-amount" id="act-amount">');
+           $('.tra-div').append('<i class="fa fa-subway" aria-hidden="true"></i> Transportation: $ <input type="text" name="tra-amount" id="tra-amount">');
+           $('.misc-div').append('<i class="fa fa-ellipsis-h" aria-hidden="true"></i> Misc: $ <input type="text" name="misc-amount" id="misc-amount">');
+           
+           // adding finalize button here
+           $('#transbtn').append('<div class="row" style="margin-top:30px;"> <div class="col-12" style="text-align:right;"><button class="btn finalize-btn"><i class="fa fa-check" ></i> Finalize Budget</button></div></div>');
+
+         });
+       
+         var food_amt = $('#food-amount').val();
+         console.log(food_amt); 
+           // finalize button functionality
+           $('.finalize-button').on('click()', () =>{
+             console.log("recognized click");
+             $('.food-div').empty();
+             $('.food-div').append('<i class="fa fa-cutlery" aria-hidden="true"></i> Food: $' + food_amt);
+           })
+       
+          
+     }
+     
+     // code for small screens
+     if (url !== url_large) {
+         $("#userBtn").hide(0.000001);
+         $("#sharedBtn").hide(0.000001);
      }
   
   
