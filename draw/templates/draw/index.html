@@ -29,7 +29,7 @@
         text-align: center;
         font-family: "Montserrat";
         margin-top:-20px;
-        color:black;
+        color: black;
         
       }
       
@@ -102,8 +102,8 @@
         font-family: "Roboto";
     }
       
-      .formy {
-        font-size: 30px;
+      option {
+        font-size:50px;
       }
         
     </style>
@@ -116,15 +116,15 @@
   <div class = "container">
     
     <div class="row" style="margin-top:30px;" >
-      <div class="col-2">
-        <button class="btn plan" id = "sharedBtn"><i class="fa fa-plus" ></i> Plan Budget</button>
+      <div class="col-1">
+        <button class="btn plan-btn"><i class="fa fa-plus" ></i> Plan Budget</button>
       </div>
       
-      <div class ="col-8 title">
+      <div class ="col-10 title">
         Shared Finances
       </div>
       
-      <div class="col-2" id="userBtn" style="margin-top:-30px;">
+      <div class="col-1 userBtn" style="margin-top:-30px;">
         <button class = "btn" style="text-align:right;"><i class="fa fa-user" ></i> Add User</button>
         <button class = "btn" style="text-align:right;"><i class="fa fa-info" ></i> Instructions</button>
         
@@ -149,9 +149,21 @@
       </div>
       
     </div>
+    
    
 
     <hr>
+    
+<!--       <div class="row screen" style="text-align:center; font-size:60px;">
+        <div class="col-12">
+          <a style = "padding-right:10px;">home</a>
+          <a style = "padding-right:10px;">track</a>
+          <a>log</a>
+        </div>
+      </div> -->
+      
+    
+    
     
     <div class="flex-container">
 
@@ -186,16 +198,16 @@
         <button class="btn finalize-btn"><i class="fa fa-check" ></i> Finalize Budget</button>
       </div>
     </div>
-   <hr>
      
   <div class="container" id="log" style="padding-top:30px;">
+    <hr>
  
   </div>
       
   <div id = "submitForm">
           <form> 
             Category:<br>
-            <select class = "formy" name="Category" id="category" size="4">
+            <select class = "form" name="Category" id="category" size="4">
               <option value="Food">Food</option>
               <option value="Activities">Activities</option>
               <option value="Transportation">Transportation</option>
@@ -221,8 +233,10 @@
      var users = ["Alice","Bob", "Eve", "Jack", "Jill", "Carl", "Josh"];
      var user = users[Math.trunc(Math.random()*users.length)];
                                  
-     var url_large = "http://sharedfinances-hchotwani921366.codeanyapp.com/draw/?size=large";
+     var url_large = "https://sharedfinances-hchotwani921366.codeanyapp.com/draw/?size=large";
      var socket = new WebSocket('wss://sharedFinances-hchotwani921366.codeanyapp.com/ws/draw');
+     var total_budget, food_amt, act_amt, tra_amt, misc_amt;
+     
      
      document.getElementById("submit").onclick = function() {sendInfo()};
 
@@ -247,67 +261,77 @@
       alert("you have submitted your purchase!");                 
     };
      
-     
+     // displays log on large screen and adjusts budget likewise
      socket.onmessage = function(message) {
        info = JSON.parse(message.data);
-       if (url===url_large) {
+       if (url === url_large) {
          $("#log").append("<div class='row log-box'><div class='col-12'>" + info.user + " spent $" + info.amount + " on "+ info.category + "</div></div>");
          console.log(info.amount);
          console.log(info.category);
          if (info.category === 'Food'){
-           
+           console.log($('.food-div').text());
          }
-       } else {
-         console.log("did not do anything with the message!!");
-       }
-     }
+         else if (info.category === 'Activities'){
+            console.log($('.act-div').text());
+         }
+         else if (info.category === 'Transportation'){
+            console.log($('.tra-div').text());
+         }
+         else {
+            console.log($('.misc-div').text());
+         }
+         
+       }  
+    }
      
      // code for large screen
      if (url === url_large) {
-         $("#submitForm").hide(0.000001);
-         $(".finalize-btn").hide(0.000001);
-         $('input').hide(); 
-         var total_budget;
+         $("#submitForm").hide(1);
+         $(".finalize-btn").hide(1);
+         $('.input-for-amounts').hide(1); 
+         $('.screen').hide(1); 
+       
          var info;
           
-         $(".plan").on('click', () => {
-           //
-           $('input').toggle();
+         $(".plan-btn").on('click', () => {
+           // show input fields
+           $('.input-for-amounts').toggle();
            // show finalize button 
            $('.finalize-btn').toggle();
          });
        
           
-           // finalize button functionality
-           $('.finalize-btn').on('click', () =>{
-             var food_amt = $('#food-amount').val();
-             console.log(food_amt);
-             var act_amt = $('#act-amount').val();
-             var tra_amt = $('#tra-amount').val();
-             var misc_amt = $('#misc-amount').val();
-             total_budget = food_amt + act_amt + tra_amt + misc_amt;
-             console.log("recognized click");
-             $('input').hide();
-             $('.finalize-btn').hide();
-             $('.food-div').append(food_amt);
-             $('.act-div').append(act_amt);
-             $('.tra-div').append(tra_amt);
-             $('.misc-div').append(misc_amt);
-           })
-       
+         // finalize button functionality
+         $('.finalize-btn').on('click', () =>{
+           food_amt = $('#food-amount').val();
+           console.log(food_amt);
+           act_amt = $('#act-amount').val();
+           tra_amt = $('#tra-amount').val();
+           misc_amt = $('#misc-amount').val();
+           total_budget = food_amt + act_amt + tra_amt + misc_amt;
+           console.log("recognized click");
+           $('.input-for-amounts').hide();
+           $('.finalize-btn').hide();
+           $('.food-div').append(food_amt);
+           $('.act-div').append(act_amt);
+           $('.tra-div').append(tra_amt);
+           $('.misc-div').append(misc_amt);
+           
+           //testing something
+           console.log($('.food-div').text());
+         });
+
           
      }
      
      // code for small screens
      if (url !== url_large) {
-         $("#userBtn").hide(0.000001);
-         $("#sharedBtn").hide(0.000001);
+         $(".userBtn").hide(1);
+         $(".plan-btn").hide(1);
          $('.input-for-amounts').hide(); 
-       
-        
-         $(".title").css("font-size","90px");
-       
-              
+         $(".title").css("font-size","150px");
+         $('.finalize-btn').hide();
+         $('.flex-container').hide();    
      }
      
      
