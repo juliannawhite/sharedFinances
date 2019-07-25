@@ -29,6 +29,7 @@
         text-align: center;
         font-family: "Montserrat";
         margin-top:-20px;
+        color:black;
         
       }
       
@@ -64,6 +65,42 @@
         background-color: white; 
         margin-top: 20px;
       }
+      
+          .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgb(0,0,0); 
+      background-color: rgba(0,0,0,0.4); 
+    }
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      font-size:60px;
+      font-family: "Montserrat";
+      
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 78px;
+      font-weight: bold;
+    }
+    .instBox {
+        text-align: left;
+        size: 15px;
+        color: black;
+        font-family: "Roboto";
+    }
         
     </style>
 
@@ -86,15 +123,29 @@
       <div class="col-2" id="userBtn" style="margin-top:-30px;">
         <button class = "btn" style="text-align:right;"><i class="fa fa-user" ></i> Add User</button>
         <button class = "btn" style="text-align:right;"><i class="fa fa-info" ></i> Instructions</button>
+        
+<!--                       <div id="myInstModal" class="modal">
+                                  <div class="modal-content">
+                                    <span class="close" id="close1">&times;</span>
+                                      <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12 instBox" style="margin-bottom:20px;">
+                                                Instructions
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12" style="text-align: left; font-size:35px;">
+                                                Blah Blah Blah
+                                            </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                            </div> -->
       </div>
       
     </div>
-    
-<!--    <div class="row" style="margin-top:30px;">
-      <div class="col-12" style="text-align:right;">
-        <button class="btn"><i class="fa fa-check" ></i> Finalize Budget</button>
-      </div>
-    </div> -->
+   
 
     <hr>
     
@@ -103,22 +154,22 @@
         <div class="category box food-div">
          <i class="fa fa-cutlery" aria-hidden="true"></i>
           Food: $
-<!--           <input type="text" name="food-amount" id="food-amount">   -->
+          <input type="text" name="food-amount" id="food-amount">
         </div>
         <div class="category box act-div">
           <i class="fa fa-bicycle" aria-hidden="true"></i>
           Activities: $
-<!--           <input type="text" name="act-amount" id="act-amount">   -->
+          <input type="text" name="act-amount" id="act-amount">
         </div>
         <div class="category box tra-div">
           <i class="fa fa-subway" aria-hidden="true"></i>
           Transportation: $
-<!--           <input type="text" name="tra-amount" id="tra-amount">  -->
+          <input type="text" name="tra-amount" id="tra-amount">
         </div>
         <div class="category box misc-div">
-            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-            Misc: $          
-<!--             <input type="text" name="misc-amount" id="misc-amount">  -->
+          <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          Misc: $
+          <input type="text" name="misc-amount" id="misc-amount">
         </div>
       
 
@@ -126,7 +177,10 @@
         </div>
       
   </div>
-    <div class="container" id ="transbtn" style = "margin-top:-55px;">
+   <div class="row" style="margin-top:30px;">
+      <div class="col-12" style="text-align:right;">
+        <button class="btn finalize-btn"><i class="fa fa-check" ></i> Finalize Budget</button>
+      </div>
     </div>
    <hr>
      
@@ -155,8 +209,7 @@
   
    $(document).ready(()=>{
      
-     var url = window.location.href;
-     
+     var url = window.location.href;     
     
      var catgories = ["Food", "Activities", "Transportation", "Misc."];
      // list of users
@@ -192,11 +245,14 @@
      
      
      socket.onmessage = function(message) {
-       var info = JSON.parse(message.data);
+       info = JSON.parse(message.data);
        if (url===url_large) {
          $("#log").append("<div class='row log-box'><div class='col-12'>" + info.user + " spent $" + info.amount + " on "+ info.category + "</div></div>");
          console.log(info.amount);
          console.log(info.category);
+         if (info.category === 'Food'){
+           
+         }
        } else {
          console.log("did not do anything with the message!!");
        }
@@ -205,30 +261,33 @@
      // code for large screen
      if (url === url_large) {
          $("#submitForm").hide(0.000001);
+         $(".finalize-btn").hide(0.000001);
+         $('input').hide(); 
+         var total_budget;
+         var info;
+          
          $(".plan").on('click', () => {
-           // clear texts
-           $('.food-div').empty();
-           $('.act-div').empty();
-           $('.tra-div').empty();
-           $('.misc-div').empty();
-           // add new texts with input option
-           $('.food-div').append('<i class="fa fa-cutlery" aria-hidden="true"></i> Food: $ <input type="text" name="food-amount" id="food-amount">');
-           $('.act-div').append('<i class="fa fa-bicycle" aria-hidden="true"></i> Activities: $ <input type="text" name="act-amount" id="act-amount">');
-           $('.tra-div').append('<i class="fa fa-subway" aria-hidden="true"></i> Transportation: $ <input type="text" name="tra-amount" id="tra-amount">');
-           $('.misc-div').append('<i class="fa fa-ellipsis-h" aria-hidden="true"></i> Misc: $ <input type="text" name="misc-amount" id="misc-amount">');
-           
-           // adding finalize button here
-           $('#transbtn').append('<div class="row" style="margin-top:30px;"> <div class="col-12" style="text-align:right;"><button class="btn finalize-btn"><i class="fa fa-check" ></i> Finalize Budget</button></div></div>');
-
+           $('input').show();
+           // show finalize button 
+           $('.finalize-btn').show();
          });
        
-         var food_amt = $('#food-amount').val();
-         console.log(food_amt); 
+          
            // finalize button functionality
-           $('.finalize-button').on('click()', () =>{
+           $('.finalize-btn').on('click', () =>{
+             var food_amt = $('#food-amount').val();
+             console.log(food_amt);
+             var act_amt = $('#act-amount').val();
+             var tra_amt = $('#tra-amount').val();
+             var misc_amt = $('#misc-amount').val();
+             total_budget = food_amt + act_amt + tra_amt + misc_amt;
              console.log("recognized click");
-             $('.food-div').empty();
-             $('.food-div').append('<i class="fa fa-cutlery" aria-hidden="true"></i> Food: $' + food_amt);
+             $('input').hide();
+             $('.finalize-btn').hide();
+             $('.food-div').append(food_amt);
+             $('.act-div').append(act_amt);
+             $('.tra-div').append(tra_amt);
+             $('.misc-div').append(misc_amt);
            })
        
           
@@ -238,7 +297,31 @@
      if (url !== url_large) {
          $("#userBtn").hide(0.000001);
          $("#sharedBtn").hide(0.000001);
+         $(".title").style.color="blue";
+              
      }
+     
+     
+//       var instmodal = document.getElementById("myInstModal");
+//       var instbtn = document.getElementById("inst");
+//       var span1 = document.getElementById("close1");
+     
+//       span1.onclick = function() {
+//       instmodal.style.display = "none";
+//       resume_clock();
+//     }
+     
+//       instbtn.onclick = function() {
+//       instmodal.style.display = "block";
+//       console.log("yes");
+//     }
+      
+//       window.onclick = function(event) {
+//         if (event.target === instmodal) {
+//           instmodal.style.display = "none";
+
+//         }
+//       }
   
   
    })
