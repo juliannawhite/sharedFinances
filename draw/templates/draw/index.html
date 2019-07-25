@@ -16,6 +16,7 @@
       
       body {
         background-color: #d5fdd5;
+        text-align: cetner;
       }
       
       .bank {
@@ -42,6 +43,16 @@
         font-family: "Roboto";
       }
       
+      #submit {
+        font-size:50px;
+        font-family: "Montserrat";
+        width: 250px;
+        background-color: lightgray;
+        height: 80px;
+        text-align: center;
+        
+      }
+            
       .flex-container{
         display: flex;
         flex-direction: column;
@@ -114,6 +125,17 @@
         text-align: center;
         margin-top: 150px;
       }
+      
+      .hello1 {
+        font-size:120px;
+        color: black;
+        width: 95%;
+        font-family: "Montserrat";
+        background-color: white;
+        text-align: center;
+        margin-top: 90px;
+      }
+      
         
     </style>
 
@@ -121,6 +143,16 @@
 <body>
     
 <!--   <img class="bank" src = "http://www.sclance.com/pngs/piggy-bank-png/piggy_bank_png_1023807.jpg"> -->
+  
+   <div class = "container hello1">
+    <div class = "row">
+      <div class = "col-12">
+        <a>Track Purchase</a>
+      </div>
+    </div>
+  </div>
+
+
   
   <div class = "container hello">
     <div class = "row">
@@ -146,7 +178,7 @@
     </div>
   </div>
   
-    <div class = "container hello" style = "margin-top: 130px;">
+    <div class = "container hello" style = "margin-top: 90px;">
     <div class = "row">
       <div class = "col-12">
         <input id = "username" name="username" type="text" style="text-align: center; width:80%; height: 100px;font-size: 60px;" ></input>
@@ -222,17 +254,6 @@
 
     <hr>
     
-<!--       <div class="row screen" style="text-align:center; font-size:60px;">
-        <div class="col-12">
-          <a style = "padding-right:10px;">home</a>
-          <a style = "padding-right:10px;">track</a>
-          <a>log</a>
-        </div>
-      </div> -->
-      
-    
-    
-    
     <div class="flex-container">
 
         <div class="category box food-div">
@@ -268,21 +289,28 @@
     </div>
      
   <div class="container" id="log" style="padding-top:30px;">
-    <hr>
+    <hr style="margin-top:-70px;">
+
  
   </div>
       
-  <div id = "submitForm">
-          <form> 
-            Category:<br>
-            <select class = "form" name="Category" id="category" size="4">
+  <div id = "submitForm" style="text-align: center;">
+          <form > 
+            <div style=" font-size: 80px; font-family:'Montserrat'; background-color: white; margin-bottom: 70px;">
+              Category:<br>
+            </div>
+            
+            <select class = "form" name="Category" id="category" size="4" style = "margin-bottom:30px; width: 600px; ">
               <option value="Food">Food</option>
               <option value="Activities">Activities</option>
               <option value="Transportation">Transportation</option>
               <option value="Misc">Misc.</option></select>
-            <br>Amount:<br>
-            <input type="text" name="amount" id="amount"> <br><br> 
-            <div id ="submit" value="Submit"> Submit </div>
+            <br>
+            <div style=" font-size: 80px; font-family:'Montserrat'; background-color: white; margin-bottom: 50px; margin-top: 50px;">
+              Amount:
+            </div>
+            <input type="text" name="amount" id="amount" style="width:90%; height: 120px; font-size: 50px; margin-bottom:70px;"> 
+            <div id ="submit" value="Submit" style="text-align: center;"> Submit </div>
           </form>
    </div>
   
@@ -315,11 +343,11 @@
         username = document.getElementById("username").value;
         console.log(username);
        // show other elements
-        $(".title").show(); 
-        $("hr").show(); 
-        $('.finalize-btn').show();
-        $('.flex-container').show();
+        //$(".title").show(); 
+       // $("hr").show(); 
+        //$('.flex-container').show();
         $('#submitForm').show();
+        $('.hello1').show();
     }
      
      
@@ -338,7 +366,7 @@
       console.log(amt);
       
       //send Info
-      var info = {"user": user, "amount": amt, "category":value};
+      var info = {"user": user, "amount": amt, "category":value, "username": username};
       var infoJSON = JSON.stringify(info);
       socket.send(infoJSON);
       
@@ -351,7 +379,7 @@
        info = JSON.parse(message.data);
        if (url.indexOf('?size=large') > -1) {
          var new_amt;
-         $("#log").append("<div class='row log-box'><div class='col-12'>" + info.user + " spent $" + info.amount + " on "+ info.category + "</div></div>");
+         $("#log").append("<div class='row log-box'><div class='col-12'>" + info.username + " spent $" + info.amount + " on "+ info.category + "</div></div>");
          console.log(info.amount);
          console.log(info.category);
          if (info.category === 'Food'){
@@ -393,6 +421,7 @@
          $('.input-for-amounts').hide(1); 
          $('.screen').hide(1); 
          $('.hello').hide(1);
+         $('.hello1').hide(1);
        
          var info;
           
@@ -432,10 +461,12 @@
        
 //          css("font-size","150px");
          $(".title").hide(); 
+         $(".title1").hide(); 
          $("hr").hide(); 
          $('.finalize-btn').hide();
          $('.flex-container').hide(); 
          $('#submitForm').hide();
+         $('.hello1').hide();
         
      }
      
