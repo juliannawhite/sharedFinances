@@ -27,6 +27,7 @@
         //$('.flex-container').show();
         $('#submitForm').show();
         $('.hello1').show();
+        $('.new-box').hide();
     }
      
      
@@ -51,14 +52,14 @@
       
       //confirmation of action                 
       alert("You have submitted your purchase!");                 
-    };
+    }
      
      // displays log on large screen and adjusts budget likewise
      socket.onmessage = function(message) {
        info = JSON.parse(message.data);
        if (url.indexOf('?size=large') > -1) {
          var new_amt;
-         $("#log").append("<div class='row log-box'><div class='col-12'>" + info.username + " spent $" + info.amount + " on "+ info.category + "</div></div>");
+         $("#log").append("<div class='row log-box'><div class='col-12'>" + info.username + " spent $" + info.amount + " on "+ info.category + "<hr></div></div>");
          console.log(info.amount);
          console.log(info.category);
          if (info.category === 'Food'){
@@ -146,6 +147,8 @@
          $('.flex-container').hide(); 
          $('#submitForm').hide();
          $('.hello1').hide();
+         $('.new-box').hide();
+         $('.container-fluid').hide();
         
      }
      
