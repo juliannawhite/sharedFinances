@@ -11,138 +11,11 @@
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-    <style type="text/css">
-      
-      body {
-        background-color: #d5fdd5;
-        text-align: cetner;
-      }
-      
-      .bank {
-        height:260px;
-        background: transparent;
-        text-align: center:
-      }
-      
-      .title {
-        font-size: 80px;
-        text-align: center;
-        font-family: "Montserrat";
-        margin-top:-20px;
-        color: black;
-        
-      }
-      
-      .category {
-        font-size:30px;
-        text-align: left;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        padding-left:20px;
-        font-family: "Roboto";
-      }
-      
-      #submit {
-        font-size:50px;
-        font-family: "Montserrat";
-        width: 250px;
-        background-color: lightgray;
-        height: 80px;
-        text-align: center;
-        
-      }
-            
-      .flex-container{
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        height: 60vh;
-        justify-content: flex-start;
-        align-items: center;
-      }
-      
-      .box {
-        width: 70%;
-        height: 25%;
-      }
-      
-      .log-box {
-        font-family: "Roboto";
-        font-size: 20px;
-      }
-      
-      .btn {
-        background-color: white; 
-        margin-top: 20px;
-      }
-      
-     .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%; 
-      overflow: auto; 
-      background-color: rgb(0,0,0); 
-      background-color: rgba(0,0,0,0.4); 
-    }
-    /* Modal Content/Box */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto; 
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      font-size:20px;
-      font-family: "Montserrat";
-      
-    }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .instBox {
-        text-align: left;
-        font-size: 20px;
-        color: black;
-        font-family: "Montserrat";
-    }
-      
-      option {
-        font-size:50px;
-      }
-      
-      .hello {
-        font-size:180px;
-        color: black;
-        font-family: "Montserrat";
-        background-color: white;
-        text-align: center;
-        margin-top: 150px;
-      }
-      
-      .hello1 {
-        font-size:120px;
-        color: black;
-        width: 95%;
-        font-family: "Montserrat";
-        background-color: white;
-        text-align: center;
-        margin-top: 90px;
-      }
-      
-        
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'app.js' %}"> </script>
 
 </head>
 <body>
-    
-<!--   <img class="bank" src = "http://www.sclance.com/pngs/piggy-bank-png/piggy_bank_png_1023807.jpg"> -->
   
    <div class = "container hello1">
     <div class = "row">
@@ -198,7 +71,7 @@
     
     <div class="row" style="margin-top:30px;" >
       <div class="col-1">
-        <button class="btn plan-btn"><i class="fa fa-plus" ></i> Plan Budget</button>
+        <button class="btn plan-btn" style =" border-radius:15px; box-shadow: 2px 3px;"><i class="fa fa-plus" ></i> Plan Budget</button>
       </div>
       
       <div class ="col-10 title">
@@ -206,8 +79,8 @@
       </div>
       
       <div class="col-1 userBtn" style="margin-top:-30px;">
-        <button class = "btn" style="text-align:right;" id="userbtn"><i class="fa fa-group" ></i> Users</button>
-        <button class = "btn" style="text-align:right; cursor:help;" id = "inst"><i class="fa fa-info" ></i> Instructions</button>
+        <button  class = "btn" style="text-align:right; border-radius:15px; box-shadow: 2px 3px;" id="userbtn"><i class="fa fa-group" ></i> Users</button>
+        <button  class = "btn" style="text-align:right; cursor:help; border-radius:15px; box-shadow: 2px 3px;" id = "inst"><i class="fa fa-info" ></i> Instructions</button>
         
                       <div id="myInstModal" class="modal">
                                   <div class="modal-content">
@@ -236,7 +109,7 @@
                                             <div class="col-12 userBox" style="margin-bottom:20px;">
                                                 In order to make sure we are doing our absolute best to keep your financial information confidential, we have made your budget private. 
                                                 As of right now, the only people who are able to use this plan include:
-                                                <br><br>Bob, Alice, Carl, and Eve<br>
+                                                <br><br>Julianna White and Himanshu Chotwani<br>
                                                 <br> If you'd like to add another user to your shared budget plan, please do so <a href="">here</a>.
 <!--                                                 fyi -- link doesn't work    -->
 <!--                                                       note to self: make it so i actually get these values from the dictionary ? -->
@@ -254,9 +127,9 @@
 
     <hr>
     
-    <div class="flex-container">
+    <div class="flex-container" >
 
-        <div class="category box food-div">
+        <div class="category box food-div" >
          <i class="fa fa-cutlery" aria-hidden="true"></i>
           Food: $
           <input class = "input-for-amounts" type="text" name="food-amount" id="food-amount">
@@ -309,203 +182,11 @@
             <div style=" font-size: 80px; font-family:'Montserrat'; background-color: white; margin-bottom: 50px; margin-top: 50px;">
               Amount:
             </div>
-            <input type="text" name="amount" id="amount" style="width:90%; height: 120px; font-size: 50px; margin-bottom:70px;"> 
+            <input type="text" name="amount" id="amount" style="width:100%; height: 120px; font-size: 50px; margin-bottom:70px;"> 
             <div id ="submit" value="Submit" style="text-align: center;"> Submit </div>
           </form>
    </div>
   
 </body>
   
-  
-<script>  
-  
-   $(document).ready(()=>{
-     
-     var url = window.location.href;     
-    
-     var catgories = ["Food", "Activities", "Transportation", "Misc."];
-     // list of users
-      // creates a  random user 
-     var users = ["Alice","Bob", "Eve", "Jack", "Jill", "Carl", "Josh"];
-     var user = users[Math.trunc(Math.random()*users.length)];
-                                 
-     var url_large = "http://sharedFinances-juliannawhite13758275.codeanyapp.com/draw/?size=large";
-     var socket = new WebSocket('wss://sharedFinances-juliannawhite13758275.codeanyapp.com/ws/draw');
-     var total_budget, food_amt, act_amt, tra_amt, misc_amt;
-     
-     // adding ability to get username
-     
-     var username;
-     var homedone = document.getElementById("homedone");
-     homedone.onclick = function() {
-        // hide intro
-        $('.hello').hide();
-        username = document.getElementById("username").value;
-        console.log(username);
-       // show other elements
-        //$(".title").show(); 
-       // $("hr").show(); 
-        //$('.flex-container').show();
-        $('#submitForm').show();
-        $('.hello1').show();
-    }
-     
-     
-     document.getElementById("submit").onclick = function() {sendInfo()};
-
-    function sendInfo() {
-      //amount
-      var amt = document.getElementById("amount").value;
-      
-      //category
-      var e = document.getElementById("category");
-      var value = e.options[e.selectedIndex].value;
-      var text = e.options[e.selectedIndex].text;
-      
-      console.log(value);
-      console.log(amt);
-      
-      //send Info
-      var info = {"user": user, "amount": amt, "category":value, "username": username};
-      var infoJSON = JSON.stringify(info);
-      socket.send(infoJSON);
-      
-      //confirmation of action                 
-      alert("you have submitted your purchase!");                 
-    };
-     
-     // displays log on large screen and adjusts budget likewise
-     socket.onmessage = function(message) {
-       info = JSON.parse(message.data);
-       if (url.indexOf('?size=large') > -1) {
-         var new_amt;
-         $("#log").append("<div class='row log-box'><div class='col-12'>" + info.username + " spent $" + info.amount + " on "+ info.category + "</div></div>");
-         console.log(info.amount);
-         console.log(info.category);
-         if (info.category === 'Food'){
-           new_amt = food_amt - info.amount;
-           $(".food-div").text(function () {
-             return $(this).text().replace(food_amt, new_amt); 
-           });
-           $(".food-div").prepend('<i class="fa fa-cutlery" aria-hidden="true"></i>');  // don't know why replace is removing this anyway adding this manually then
-         }
-         else if (info.category === 'Activities'){
-           new_amt = act_amt - info.amount;
-           $(".act-div").text(function () {
-             return $(this).text().replace(act_amt, new_amt); 
-           });
-           $(".act-div").prepend('<i class="fa fa-bicycle" aria-hidden="true"></i>');
-         }
-         else if (info.category === 'Transportation'){
-           new_amt = tra_amt - info.amount;
-           $(".tra-div").text(function () {
-             return $(this).text().replace(tra_amt, new_amt); 
-           });
-           $(".tra-div").prepend('<i class="fa fa-subway" aria-hidden="true"></i>');
-         }
-         else {
-           new_amt = misc_amt - info.amount;
-           $(".misc-div").text(function () {
-             return $(this).text().replace(misc_amt, new_amt); 
-           });
-           $(".misc-div").prepend('<i class="fa fa-ellipsis-h" aria-hidden="true"></i>');
-         }
-         
-       }  
-    }
-     
-     // code for large screen
-     if (url.indexOf('?size=large') > -1) {
-         $("#submitForm").hide(1);
-         $(".finalize-btn").hide(1);
-         $('.input-for-amounts').hide(1); 
-         $('.screen').hide(1); 
-         $('.hello').hide(1);
-         $('.hello1').hide(1);
-       
-         var info;
-          
-         $(".plan-btn").on('click', () => {
-           // show input fields
-           $('.input-for-amounts').toggle();
-           // show finalize button 
-           $('.finalize-btn').toggle();
-         });
-       
-          
-         // finalize button functionality
-         $('.finalize-btn').on('click', () =>{
-           food_amt = $('#food-amount').val();
-           act_amt = $('#act-amount').val();
-           tra_amt = $('#tra-amount').val();
-           misc_amt = $('#misc-amount').val();
-           total_budget = food_amt + act_amt + tra_amt + misc_amt;
-           console.log("recognized click");
-           $('.input-for-amounts').hide();
-           $('.finalize-btn').hide();
-           $('.food-div').append(food_amt);
-           $('.act-div').append(act_amt);
-           $('.tra-div').append(tra_amt);
-           $('.misc-div').append(misc_amt);
-           
-         });
-
-          
-     }
-     
-     // code for small screens
-     if (!(url.indexOf('?size=large') > -1)) {
-         $(".userBtn").hide(1);
-         $(".plan-btn").hide(1);
-         $('.input-for-amounts').hide(1); 
-       
-//          css("font-size","150px");
-         $(".title").hide(); 
-         $(".title1").hide(); 
-         $("hr").hide(); 
-         $('.finalize-btn').hide();
-         $('.flex-container').hide(); 
-         $('#submitForm').hide();
-         $('.hello1').hide();
-        
-     }
-     
-      var instmodal = document.getElementById("myInstModal");
-      var instbtn = document.getElementById("inst");
-      var span1 = document.getElementById("close1");
-     
-      var usermodal = document.getElementById("myUserModal");
-      var userbtn = document.getElementById("userbtn");
-      var span2 = document.getElementById("close2");
-     
-      span1.onclick = function() {
-      instmodal.style.display = "none";
-    }
-      
-      span2.onclick = function() {
-      usermodal.style.display = "none";
-    }
-     
-      instbtn.onclick = function() {
-       instmodal.style.display = "block";
-      }
-      userbtn.onclick = function() {
-        usermodal.style.display = "block";
-      }
-      
-      window.onclick = function(event) {
-        if (event.target === instmodal) {
-          instmodal.style.display = "none";
-
-        }
-        if (event.target === usermodal) {
-          usermodal.style.display = "none";
-
-        }
-      }
-  
-  
-   })
-  
-</script>
 </html>

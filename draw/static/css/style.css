@@ -1,0 +1,121 @@
+      body {
+        background-image: linear-gradient(red, yellow, blue);
+        text-align: cetner;
+      }
+      
+      .bank {
+        height:260px;
+        background: transparent;
+        text-align: center:
+      }
+      
+      .title {
+        font-size: 80px;
+        text-align: center;
+        font-family: "Montserrat";
+        margin-top:-20px;
+        color: black;
+        
+      }
+      
+      .category {
+        font-size:30px;
+        text-align: left;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left:20px;
+        font-family: "Roboto";
+      }
+      
+      #submit {
+        font-size:50px;
+        font-family: "Montserrat";
+        width: 250px;
+        background-color: lightgray;
+        height: 80px;
+        text-align: center;
+      }
+            
+      .flex-container{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 60vh;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      
+      .box {
+        width: 70%;
+        height: 25%;
+      }
+      
+      .log-box {
+        font-family: "Roboto";
+        font-size: 20px;
+      }
+      
+      .btn {
+        background-color: white; 
+        margin-top: 20px;
+      }
+      
+     .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgb(0,0,0); 
+      background-color: rgba(0,0,0,0.4); 
+    }
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      font-size:20px;
+      font-family: "Montserrat";
+      
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .instBox {
+        text-align: left;
+        font-size: 20px;
+        color: black;
+        font-family: "Montserrat";
+    }
+      
+      option {
+        font-size:50px;
+      }
+      
+      .hello {
+        font-size:180px;
+        color: black;
+        font-family: "Montserrat";
+        background-color: white;
+        text-align: center;
+        margin-top: 150px;
+      }
+      
+      .hello1 {
+        font-size:120px;
+        color: black;
+        width: 95%;
+        font-family: "Montserrat";
+        background-color: white;
+        text-align: center;
+        margin-top: 90px;
+      }
+      
